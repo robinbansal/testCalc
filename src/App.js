@@ -1,11 +1,11 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import Buttons from "./components/Button.js";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello World!!</h1>
+      <Buttons />
     </div>
   );
 }
