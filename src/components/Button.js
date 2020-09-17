@@ -4,7 +4,7 @@ class Button extends Component {
   render() {
     return (
       <div>
-        <p>Button Test</p>
+        <p>Button!!</p>
       </div>
     );
   }
