@@ -1,0 +1,13 @@
+.history-list {
+    height: 100%;
+    padding-bottom: 50px;
+}
+
+.history-item {
+    text-align: right;
+}
+
+.history-item hr {
+    color: #aaa;
+    size: 1px;
+}

@@ -2,6 +2,7 @@ import React from "react";
 import Buttons from "./components/Button";
 import DisplayToolbar from "./components/DisplayToolbar";
 import * as Calculator from "./components/Calculator-core";
+import History from "./components/History";
 import "./App.css";
 
 export default class App extends React.Component {
@@ -214,6 +215,13 @@ export default class App extends React.Component {
             onDigit={this.onDigit}
             onOperator={this.onOperator}
             onParenthesis={this.onParenthesis}
+          />
+
+          <History
+            isShowHistory={this.state.isShowHistory}
+            history={this.state.history}
+            onEqual={this.onEqual}
+            onClearHistory={this.onClearHistory}
           />
         </div>
       </div>
