@@ -113,12 +113,12 @@ export default class App extends React.Component {
         });
       }
     } else {
-      const arrayOpenParenthesis = this.state.formula.join("").match(/\(/g);
+      const arrayOpenParenthesis = this.state.formula.join("");
       const numOpenParenthesis = arrayOpenParenthesis
         ? arrayOpenParenthesis.length
         : 0;
 
-      const arrayCloseParenthesis = this.state.formula.join("").match(/\)/g);
+      const arrayCloseParenthesis = this.state.formula.join("");
       const numCloseParenthesis = arrayCloseParenthesis
         ? arrayCloseParenthesis.length
         : 0;
@@ -163,12 +163,6 @@ export default class App extends React.Component {
     } else if (input !== "0") {
       this.setState({
         input: "0",
-        afterCalc: false,
-      });
-    } else if (formula.length > 0) {
-      this.setState({
-        input: formula[formula.length - 1],
-        formula: formula.slice(0, formula.length - 1),
         afterCalc: false,
       });
     }

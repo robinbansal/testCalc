@@ -44,13 +44,6 @@ export function infix2Postfix(arrFormula) {
       result.push(item);
     } else if (item === "(") {
       stack.push(item);
-    } else if (item === ")") {
-      while (stack.length > 0) {
-        const pulledItem = stack.pop();
-
-        if (pulledItem === "(") break;
-        else result.push(pulledItem);
-      }
     } else if (isOperator(item)) {
       while (stack.length > 0) {
         const peekedItem = stack[stack.length - 1];
