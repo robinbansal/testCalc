@@ -2,7 +2,6 @@
     width: 100%;
     display: flex;
     flex-flow: column;
-    -ms-flex-flow: column;
     justify-content: space-between;
     padding: 15px 15px 0 15px;
     background-color: #fff;
@@ -13,7 +12,6 @@
 .display-input {
     width: 100%;
     resize: none;
-    font-family: Nunito Sans, Helvetica, Arial, sans-serif;
     border: none;
     outline: none;
     text-align: right;
@@ -22,11 +20,10 @@
 
 .display-formula {
     flex-grow: 1;
-    font-size: 2rem;
 }
 
 .display-input {
-    flex-shrink: 0;
+    /* flex-shrink: 0; */
     font-size: 1.75rem;
     color: #888;
     white-space: nowrap;
@@ -43,7 +40,6 @@
     justify-content: flex-end;
     padding: 10px 15px;
     color: #3da4ab;
-    text-transform: uppercase;
     font-weight: 700;
     font-size: 1.4rem;
     flex-shrink: 0;
@@ -52,10 +48,4 @@
 .toolbar-item:hover {
     cursor: pointer;
     color: #0e9aa7;
-}
-
-
-#backspace {
-    margin-left: 30px;
-    font-size: 1.5rem;
 }

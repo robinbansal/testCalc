@@ -9,7 +9,6 @@
   max-height: 800px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .display-toolbar {
@@ -41,14 +40,11 @@
 
 .history {
   position: fixed;
-  width: calc(75% - 0.25rem);
-  height: calc(60% * 4 / 5 - 0.25rem);
   left: 0;
   bottom: 0;
   background-color: #fff;
   border: 1px solid #c6c6c6;
   opacity: 1;
-  transition: all 0.35s ease-in-out;
   z-index: 101;
 }
 
