@@ -10,8 +10,10 @@ export default class App extends React.Component {
 
     this.state = {
       formula: [],
+      history: [],
       input: "0",
-      afterCalc: false,
+      afterCalculation: false,
+      isShowHistory: false,
     };
   }
 
@@ -187,6 +189,12 @@ export default class App extends React.Component {
     }
   };
 
+  onHistory = () => {
+    this.setState({
+      isShowHistory: !this.state.isShowHistory,
+    });
+  };
+
   render() {
     return (
       <div>
@@ -194,6 +202,7 @@ export default class App extends React.Component {
           <DisplayToolbar
             formula={this.state.formula}
             input={this.state.input}
+            onHistory={this.onHistory}
             onBackspace={this.onBackspace}
             isShowHistory={this.state.isShowHistory}
           />

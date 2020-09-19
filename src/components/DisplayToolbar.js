@@ -20,6 +20,13 @@ export default class DisplayToolbar extends React.Component {
           ></textarea>
         </form>
         <div className="toolbar">
+          <div
+            className="toolbar-item"
+            id="view-history"
+            onClick={this.props.onHistory}
+          >
+            {this.props.isShowHistory ? "Keypad" : "History"}
+          </div>
           <div>
             <span
               className="toolbar-item"
