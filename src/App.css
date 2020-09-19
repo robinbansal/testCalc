@@ -41,8 +41,8 @@
 
 .history {
   position: fixed;
-  width: calc(75% - 0.25rem);
-  height: calc(60% * 4 / 5 - 0.25rem);
+  width: calc(100% - 0.25rem);
+  height: calc(75% * 4 / 5 - 0.25rem);
   left: 0;
   bottom: 0;
   background-color: #fff;
