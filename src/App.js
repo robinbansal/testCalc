@@ -81,7 +81,6 @@ export default class App extends React.Component {
       });
     }
   };
-
   onParenthesis = ({ target }) => {
     const parenthesis = target.innerText;
     const input = this.state.input;
@@ -97,13 +96,13 @@ export default class App extends React.Component {
         this.setState({
           input: parenthesis,
           formula: this.state.formula.concat([input, "*"]),
-          afterCalc: false,
+          afterCalculation: false,
         });
       } else if (Calculator.isOperator(input) || input === "(") {
         this.setState({
           input: parenthesis,
           formula: this.state.formula.concat(input),
-          afterCalc: false,
+          afterCalculation: false,
         });
       } else if (
         Calculator.isNumber(input) &&
@@ -112,16 +111,16 @@ export default class App extends React.Component {
       ) {
         this.setState({
           input: parenthesis,
-          afterCalc: false,
+          afterCalculation: false,
         });
       }
     } else {
-      const arrayOpenParenthesis = this.state.formula.join("");
+      const arrayOpenParenthesis = this.state.formula.join("").match(/\(/g);
       const numOpenParenthesis = arrayOpenParenthesis
         ? arrayOpenParenthesis.length
         : 0;
 
-      const arrayCloseParenthesis = this.state.formula.join("");
+      const arrayCloseParenthesis = this.state.formula.join("").match(/\)/g);
       const numCloseParenthesis = arrayCloseParenthesis
         ? arrayCloseParenthesis.length
         : 0;
@@ -134,7 +133,7 @@ export default class App extends React.Component {
         this.setState({
           input: parenthesis,
           formula: this.state.formula.concat(input),
-          afterCalc: false,
+          afterCalculation: false,
         });
       }
     }
@@ -195,7 +194,11 @@ export default class App extends React.Component {
       isShowHistory: !this.state.isShowHistory,
     });
   };
-
+  onClearHistory = () => {
+    this.setState({
+      history: [],
+    });
+  };
   render() {
     return (
       <div>
@@ -220,7 +223,6 @@ export default class App extends React.Component {
           <History
             isShowHistory={this.state.isShowHistory}
             history={this.state.history}
-            onEqual={this.onEqual}
             onClearHistory={this.onClearHistory}
           />
         </div>

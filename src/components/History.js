@@ -56,9 +56,6 @@ class History extends React.Component {
           <button id="clear-history" onClick={this.props.onClearHistory}>
             Clear
           </button>
-          <button id="calculate" onClick={this.props.onEqual}>
-            Equal
-          </button>
         </div>
       </div>
     );
