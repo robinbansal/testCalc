@@ -13,16 +13,47 @@ export default class App extends React.Component {
       formula: [],
       history: [],
       input: "0",
-      afterCalculation: false,
+      afterCalc: false,
       isShowHistory: false,
     };
   }
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKey);
+  }
 
+  handleKey = (event) => {
+    let numArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    let { key } = event;
+    if (!key) {
+      console.log("No key");
+      return;
+    }
+    console.log(typeof key);
+    if (key === "Enter") key = this.onEqual();
+
+    if (numArr.includes(key)) {
+      event.preventDefault();
+      this.onDigit({ target: { innerText: key } });
+    } else if (key === ".") {
+      event.preventDefault();
+      this.onDecimal();
+    } else if (key === "Backspace") {
+      event.preventDefault();
+      this.onBackspace();
+    } else if (key === "Clear") {
+      event.preventDefault();
+      this.onClear();
+    } else if (["*", "/", "+", "-", "%"].includes(key)) {
+      event.preventDefault();
+      //this.handleClick(key);
+      this.onOperator({ target: { innerText: key } });
+    }
+  };
   onDigit = ({ target }) => {
     const digit = target.innerText;
     const input = this.state.input;
-
-    if (this.state.afterCalculation) {
+    // console.log(digit);
+    if (this.state.afterCalc) {
       this.setState({
         input: digit,
         afterCalc: false,
@@ -43,27 +74,33 @@ export default class App extends React.Component {
     }
   };
 
-  onDecimal = ({ target }) => {
-    const decimal = target.innerText;
-    const input = this.state.input;
+  // onDecimal = ({ target }) => {
+  //   const decimal = target.innerText;
+  //   const input = this.state.input;
+  //   // console.log(decimal);
+  //   if (this.state.afterCalc) {
+  //     this.setState({
+  //       input: `0${decimal}`,
+  //       afterCalc: false,
+  //     });
+  //   } else if (Calculator.isNotNumber(input)) {
+  //     this.setState({
+  //       input: `0${decimal}`,
+  //       formula: this.state.formula.concat(input),
+  //     });
+  //   } else if (!input.includes(decimal)) {
+  //     this.setState({
+  //       input: input.concat(decimal),
+  //     });
+  //   }
+  // };
 
-    if (this.state.afterCalculation) {
-      this.setState({
-        input: `0${decimal}`,
-        afterCalc: false,
-      });
-    } else if (Calculator.isNotNumber(input)) {
-      this.setState({
-        input: `0${decimal}`,
-        formula: this.state.formula.concat(input),
-      });
-    } else if (!input.includes(decimal)) {
-      this.setState({
-        input: input.concat(decimal),
-      });
+  onDecimal = () => {
+    const { input } = this.state;
+    if (input.indexOf(".") === -1) {
+      this.setState({ input: input + "." });
     }
   };
-
   onOperator = ({ target }) => {
     const operator = target.innerText;
     const input = this.state.input;
@@ -96,13 +133,13 @@ export default class App extends React.Component {
         this.setState({
           input: parenthesis,
           formula: this.state.formula.concat([input, "*"]),
-          afterCalculation: false,
+          afterCalc: false,
         });
       } else if (Calculator.isOperator(input) || input === "(") {
         this.setState({
           input: parenthesis,
           formula: this.state.formula.concat(input),
-          afterCalculation: false,
+          afterCalc: false,
         });
       } else if (
         Calculator.isNumber(input) &&
@@ -111,7 +148,7 @@ export default class App extends React.Component {
       ) {
         this.setState({
           input: parenthesis,
-          afterCalculation: false,
+          afterCalc: false,
         });
       }
     } else {
@@ -133,7 +170,7 @@ export default class App extends React.Component {
         this.setState({
           input: parenthesis,
           formula: this.state.formula.concat(input),
-          afterCalculation: false,
+          afterCalc: false,
         });
       }
     }
@@ -172,13 +209,15 @@ export default class App extends React.Component {
 
   onEqual = () => {
     const finalFormula = this.state.formula.concat(this.state.input);
+    console.log(finalFormula);
     const result = Calculator.evaluate(finalFormula);
-
-    if (!Number.isNaN(result)) {
+    console.log("R", result);
+    if (typeof result == "number") {
       const newHistoryItem = {
         formula: finalFormula,
         result: result,
       };
+      console.log("IN");
 
       this.setState({
         input: result + "",
