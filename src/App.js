@@ -29,8 +29,11 @@ export default class App extends React.Component {
       return;
     }
     console.log(typeof key);
-    if (key === "Enter") key = this.onEqual();
-
+    if (key === "Enter") {
+      key = this.onEqual();
+      return;
+    }
+    console.log("handlekey", key);
     if (numArr.includes(key)) {
       event.preventDefault();
       this.onDigit({ target: { innerText: key } });
@@ -177,6 +180,7 @@ export default class App extends React.Component {
   };
 
   onClear = () => {
+    console.log("CLEAR ALL");
     this.setState({
       formula: [],
       input: "0",
@@ -186,24 +190,33 @@ export default class App extends React.Component {
 
   onBackspace = () => {
     const input = this.state.input;
-    const formula = this.state.formula;
     const currentInputLength = input.length;
 
+    // 1. if input is there, clear input on every backspace
     if (input === "Infinity" || input === "-Infinity" || input === "NaN") {
       this.setState({
         input: "0",
         afterCalc: false,
       });
+      return;
     } else if (currentInputLength > 1) {
       this.setState({
         input: input.slice(0, currentInputLength - 1),
         afterCalc: false,
       });
+      return;
     } else if (input !== "0") {
       this.setState({
-        input: "0",
+        input: "",
         afterCalc: false,
       });
+    }
+    if (input.slice(0, currentInputLength - 1) == "") {
+      const formArr = this.state.formula;
+      if (formArr.length > 0) {
+        const el = formArr.pop();
+        this.setState({ ...this.state, formula: formArr, input: el });
+      }
     }
   };
 
@@ -217,13 +230,16 @@ export default class App extends React.Component {
         formula: finalFormula,
         result: result,
       };
-      console.log("IN");
+      console.log("IN", result);
 
-      this.setState({
-        input: result + "",
-        formula: [],
-        history: [].concat(newHistoryItem, this.state.history),
-        afterCalc: true,
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          input: result + "",
+          formula: [],
+          history: [].concat(newHistoryItem, this.state.history),
+          afterCalc: true,
+        };
       });
     }
   };

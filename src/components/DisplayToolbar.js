@@ -9,15 +9,15 @@ export default class DisplayToolbar extends React.Component {
           <textarea
             className="display-formula"
             onChange={this.onTextareaChanged}
-            value={this.props.formula.join("")}
+            value={this.props.formula.join("") + this.props.input}
           ></textarea>
-          <textarea
+          {/* <textarea
             className="display-input"
             id="display"
             rows="1"
             onChange={this.onTextareaChanged}
-            value={this.props.input}
-          ></textarea>
+            value={this.props.formula.join("") + this.props.input}
+          ></textarea> */}
         </form>
         <div className="toolbar">
           <div
