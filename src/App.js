@@ -16,7 +16,6 @@ export default class App extends React.Component {
       output: "",
       afterCalc: false,
       isShowHistory: false,
-      copy: "",
     };
   }
   componentDidMount() {
@@ -184,8 +183,6 @@ export default class App extends React.Component {
       const numCloseParenthesis = arrayCloseParenthesis
         ? arrayCloseParenthesis.length
         : 0;
-      console.log(numCloseParenthesis);
-      console.log(numOpenParenthesis);
       if (numCloseParenthesis > numOpenParenthesis) {
         alert("Missing bracket");
       }
@@ -278,9 +275,6 @@ export default class App extends React.Component {
         });
       }
     }
-  };
-  onCopy = () => {
-    navigator.clipboard.writeText(this.state.output);
   };
   onHistory = () => {
     this.setState({
