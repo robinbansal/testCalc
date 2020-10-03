@@ -16,6 +16,7 @@ export default class App extends React.Component {
       output: "",
       afterCalc: false,
       isShowHistory: false,
+      copy: "",
     };
   }
   componentDidMount() {
@@ -183,12 +184,9 @@ export default class App extends React.Component {
       const numCloseParenthesis = arrayCloseParenthesis
         ? arrayCloseParenthesis.length
         : 0;
-
-      if (
-        (Calculator.isNumber(input) || input === ")") &&
-        numOpenParenthesis > 0 &&
-        numOpenParenthesis < numCloseParenthesis
-      ) {
+      console.log(numCloseParenthesis);
+      console.log(numOpenParenthesis);
+      if (numCloseParenthesis > numOpenParenthesis) {
         alert("Missing bracket");
       }
 
@@ -281,7 +279,9 @@ export default class App extends React.Component {
       }
     }
   };
-
+  onCopy = () => {
+    navigator.clipboard.writeText(this.state.output);
+  };
   onHistory = () => {
     this.setState({
       isShowHistory: !this.state.isShowHistory,
@@ -312,6 +312,7 @@ export default class App extends React.Component {
             onDigit={this.onDigit}
             onOperator={this.onOperator}
             onParenthesis={this.onParenthesis}
+            textToCopy={this.state.afterCalc ? this.state.input : ""}
           />
 
           <History

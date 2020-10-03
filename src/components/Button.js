@@ -66,11 +66,20 @@ const Buttons = (props) => {
       <button id="decimal" onClick={props.onDecimal}>
         .
       </button>
-      <button id="equals" onClick={() => props.onEqual(false)}>
-        =
+
+      <button
+        id="copy"
+        onClick={() => {
+          navigator.clipboard.writeText(props.textToCopy);
+        }}
+      >
+        Copy
       </button>
       <button id="add" onClick={props.onOperator}>
         +
+      </button>
+      <button id="equals" onClick={() => props.onEqual(false)}>
+        =
       </button>
     </div>
   );
