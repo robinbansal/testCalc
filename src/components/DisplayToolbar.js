@@ -11,13 +11,14 @@ export default class DisplayToolbar extends React.Component {
             onChange={this.onTextareaChanged}
             value={this.props.formula.join("") + this.props.input}
           ></textarea>
-          {/* <textarea
+          <textarea
+            disabled
             className="display-input"
             id="display"
             rows="1"
-            onChange={this.onTextareaChanged}
-            value={this.props.formula.join("") + this.props.input}
-          ></textarea> */}
+            // onChange={this.props.output}
+            value={this.props.output}
+          ></textarea>
         </form>
         <div className="toolbar">
           <div

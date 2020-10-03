@@ -72,7 +72,7 @@ export function infix2Postfix(arrFormula) {
 
 export function evaluatePostfix(arrPostfix) {
   let stack = [];
-
+  //   console.log(arrPostfix);
   arrPostfix.forEach((item) => {
     if (isNumber(item)) {
       stack.push(item);
@@ -100,7 +100,9 @@ export function evaluatePostfix(arrPostfix) {
         default:
           console.log("Something else!!!");
       }
-
+      if (result + "" == "Infinity") {
+        result = "NaN";
+      }
       stack.push(result + "");
     } else {
       console.log("Something else!!!");

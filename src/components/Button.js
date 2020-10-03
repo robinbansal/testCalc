@@ -66,7 +66,7 @@ const Buttons = (props) => {
       <button id="decimal" onClick={props.onDecimal}>
         .
       </button>
-      <button id="equals" onClick={props.onEqual}>
+      <button id="equals" onClick={() => props.onEqual(false)}>
         =
       </button>
       <button id="add" onClick={props.onOperator}>

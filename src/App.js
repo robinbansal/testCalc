@@ -13,6 +13,7 @@ export default class App extends React.Component {
       formula: [],
       history: [],
       input: "0",
+      output: "",
       afterCalc: false,
       isShowHistory: false,
     };
@@ -21,6 +22,26 @@ export default class App extends React.Component {
     document.addEventListener("keydown", this.handleKey);
   }
 
+  componentDidUpdate = (_, prevState) => {
+    let numArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    let inputIsNumber = false;
+
+    if (this.state.input.length > 0) {
+      [...this.state.input].forEach((i) => {
+        if (numArr.indexOf(i) !== -1) {
+          inputIsNumber = true;
+        }
+      });
+    }
+    if (
+      this.state.input != prevState.input &&
+      inputIsNumber &&
+      this.state.formula.length > 1
+    ) {
+      this.onEqual();
+    }
+  };
+
   handleKey = (event) => {
     let numArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     let { key } = event;
@@ -28,12 +49,10 @@ export default class App extends React.Component {
       console.log("No key");
       return;
     }
-    console.log(typeof key);
     if (key === "Enter") {
-      key = this.onEqual();
+      this.onEqual(false);
       return;
     }
-    console.log("handlekey", key);
     if (numArr.includes(key)) {
       event.preventDefault();
       this.onDigit({ target: { innerText: key } });
@@ -168,6 +187,14 @@ export default class App extends React.Component {
       if (
         (Calculator.isNumber(input) || input === ")") &&
         numOpenParenthesis > 0 &&
+        numOpenParenthesis < numCloseParenthesis
+      ) {
+        alert("Missing bracket");
+      }
+
+      if (
+        (Calculator.isNumber(input) || input === ")") &&
+        numOpenParenthesis > 0 &&
         numOpenParenthesis > numCloseParenthesis
       ) {
         this.setState({
@@ -184,6 +211,7 @@ export default class App extends React.Component {
     this.setState({
       formula: [],
       input: "0",
+      output: "",
       afterCalc: false,
     });
   };
@@ -220,27 +248,37 @@ export default class App extends React.Component {
     }
   };
 
-  onEqual = () => {
+  onEqual = (auto = true) => {
     const finalFormula = this.state.formula.concat(this.state.input);
-    console.log(finalFormula);
+    // console.log(finalFormula);
     const result = Calculator.evaluate(finalFormula);
-    console.log("R", result);
+    // console.log("R", result);
     if (typeof result == "number") {
       const newHistoryItem = {
         formula: finalFormula,
         result: result,
       };
-      console.log("IN", result);
-
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          input: result + "",
-          formula: [],
-          history: [].concat(newHistoryItem, this.state.history),
-          afterCalc: true,
-        };
-      });
+      // console.log("IN", result);
+      if (auto) {
+        this.setState((prevState) => {
+          return {
+            ...prevState,
+            output: result + "",
+            afterCalc: false,
+          };
+        });
+      } else {
+        this.setState((prevState) => {
+          return {
+            ...prevState,
+            input: prevState.output,
+            output: "",
+            formula: [],
+            history: [].concat(newHistoryItem, this.state.history),
+            afterCalc: true,
+          };
+        });
+      }
     }
   };
 
@@ -261,6 +299,7 @@ export default class App extends React.Component {
           <DisplayToolbar
             formula={this.state.formula}
             input={this.state.input}
+            output={this.state.output}
             onHistory={this.onHistory}
             onBackspace={this.onBackspace}
             isShowHistory={this.state.isShowHistory}
