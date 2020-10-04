@@ -183,15 +183,22 @@ export default class App extends React.Component {
       const numCloseParenthesis = arrayCloseParenthesis
         ? arrayCloseParenthesis.length
         : 0;
-      if (numCloseParenthesis > numOpenParenthesis) {
-        alert("Missing bracket");
+      if (
+        numCloseParenthesis + 2 > numOpenParenthesis &&
+        numOpenParenthesis === 0
+      ) {
+        alert("Missing bracket )");
       }
-
+      console.log(numOpenParenthesis);
+      console.log(numCloseParenthesis);
       if (
         (Calculator.isNumber(input) || input === ")") &&
         numOpenParenthesis > 0 &&
         numOpenParenthesis > numCloseParenthesis
       ) {
+        if (numCloseParenthesis > numOpenParenthesis) {
+          alert("Missing bracket");
+        }
         this.setState({
           input: parenthesis,
           formula: this.state.formula.concat(input),
